@@ -10,4 +10,5 @@ public class AssignMateApplication {
 		SpringApplication.run(AssignMateApplication.class, args);
 	}
 
+
 }
