@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class FeedBack {
     @Id
     private String feedBackId;
-    private String assignmentId;
+    private String adminId;
     private String submissionId;
     private String feedBack;
     private String feedBackDate;

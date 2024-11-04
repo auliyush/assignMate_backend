@@ -29,7 +29,7 @@ public class SubmissionController {
     }
     @GetMapping("/get/by/userId")
     public ApiResponse<Submission> getSubmissionByUserId(@RequestParam String userId){
-        return new ApiResponse<>(submissionService.getSubmissionByUserId(userId), HttpStatus.ACCEPTED);
+        return new ApiResponse<>(submissionService.getSubmissionByUserId(userId), HttpStatus.OK);
     }
     @PutMapping("/update")
     public ApiResponse<Boolean> submissionUpdate(@RequestBody UpdateSubmissionRequest updateSubmissionRequest){
