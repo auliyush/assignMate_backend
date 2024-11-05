@@ -5,18 +5,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.Date;
 
-@Document(collection = "feedBack")
+@Document(collection = "notification")
 @Getter
 @Setter
 @NoArgsConstructor
-public class FeedBack {
+public class Notification {
     @Id
-    private String feedBackId;
-    private String adminId;
-    private String submissionId;
-    private String feedBack;
-    private Date feedBackDate;
+    private String notificationId;
+    private String notificationTitle;
+    private String notificationDescription;
+    private Date notificationDate;
 }

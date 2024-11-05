@@ -1,7 +1,10 @@
 package assignMate.example.AssignMate.Services;
 
 import assignMate.example.AssignMate.Models.CreateRequest.UserCreateRequest;
+import assignMate.example.AssignMate.Models.Notification;
 import assignMate.example.AssignMate.Models.User;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -10,4 +13,8 @@ public interface UserService {
     User getUserById(String userId);
 
     User getUserByPhoneNumber(String phoneNumber);
+
+    Boolean addNotificationInUser(Notification notification, String adminId);
+
+    List<User> getAllUser();
 }

@@ -20,7 +20,7 @@ public class AssignmentController {
 
     @PostMapping("/create")
     public ApiResponse<Assignment> createAssignment(@RequestBody AssignmentCreateRequest assignmentCreateRequest) {
-        return new ApiResponse<>(assignmentService.createAssignment(assignmentCreateRequest), HttpStatus.OK);
+        return new ApiResponse<>(assignmentService.createAssignment(assignmentCreateRequest), HttpStatus.ACCEPTED);
     }
     @GetMapping("/get/by/Id")
     public ApiResponse<Assignment> getAssignmentById(@RequestParam String assignmentId) {
@@ -30,5 +30,8 @@ public class AssignmentController {
     public ApiResponse<List<Assignment>> getAllAssignmentByAdminId(@RequestParam String adminId) {
         return new ApiResponse<>(assignmentService.getAllAssignmentByAdminId(adminId), HttpStatus.OK);
     }
-
+    @GetMapping("/get/all")
+    public ApiResponse<List<Assignment>> getAllAssignments(){
+        return new ApiResponse<>(assignmentService.getAllAssignments(), HttpStatus.OK);
+    }
 }

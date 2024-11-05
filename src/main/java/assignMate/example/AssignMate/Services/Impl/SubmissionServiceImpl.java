@@ -28,13 +28,24 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Override
     public Boolean createSubmission(SubmissionCreateRequest submissionCreateRequest) {
         Assignment assignment = assignmentService.getAssignmentById(submissionCreateRequest.getAssignmentId());
-        if(assignment == null){
+        // check assignment validation
+        if(assignment != null){
+            if(!assignment.isActive()){
+                throw new ApplicationException("Assignment Due Date is complete");
+            }
+        }else {
             throw new ApplicationException("Assignment not Exist");
         }
         User user = userService.getUserById(submissionCreateRequest.getUserId());
         if(user == null){
             throw new ApplicationException("User not Exist");
         }
+        Submission submission = getSubmission(submissionCreateRequest);
+        submissionRepository.save(submission);
+        return true;
+    }
+    // this method for set submission data from createRequest (improve code readability)
+    private static Submission getSubmission(SubmissionCreateRequest submissionCreateRequest) {
         Submission submission = new Submission();
         submission.setUserId(submissionCreateRequest.getUserId());
         submission.setAssignmentId(submissionCreateRequest.getAssignmentId());
@@ -43,8 +54,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         submission.setSubmissionDate(submissionCreateRequest.getSubmissionDate());
         submission.setFile(submissionCreateRequest.getFile());
         submission.setSubmissionStatus("Pending");
-        submissionRepository.save(submission);
-        return true;
+        return submission;
     }
 
     @Override
@@ -80,8 +90,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         if(!updateSubmissionRequest.getUserId().equals(submission.getUserId())){
             throw new ApplicationException("This is Not Your Submission you can't Update");
         }
-        //Assignment assignment = assignmentService.getAssignmentById(submission.getAssignmentId());
-        // todo compare the date currently i use string instead of Date dataType
         submission.setSubmissionTitle(updateSubmissionRequest.getSubmissionTitle());
         submission.setSubmissionDescription(updateSubmissionRequest.getSubmissionDescription());
         submission.setFile(updateSubmissionRequest.getFile());

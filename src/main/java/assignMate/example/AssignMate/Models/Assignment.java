@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +14,14 @@ import java.util.List;
 public class Assignment {
     @Id
     private String assignmentId;
+    private String adminName;
     private String adminId;
     private String assignmentName;
     private String assignmentDescription;
-    private String createDate; // todo change String into Date
-    private String dueDate;
+    private String assignmentFile;
+    private boolean isActive;
+    private LocalDate createDate;
+    private LocalDate dueDate;
     private List<Submission> submissionList;
     public Assignment(){
         this.submissionList = new ArrayList<>();

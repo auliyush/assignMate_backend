@@ -18,10 +18,10 @@ public class AppController {
 
     @PostMapping("/signUp")
     public ApiResponse<Boolean> signUp(@RequestBody UserCreateRequest userCreateRequest){
-        return new ApiResponse<Boolean>(appService.signUp(userCreateRequest), HttpStatus.ACCEPTED) ;
+        return new ApiResponse<Boolean>(appService.signUp(userCreateRequest), HttpStatus.OK) ;
     }
     @PostMapping("/login")
     public ApiResponse<LoginResponse> login(@RequestBody LoginCreateRequest loginCreateRequest){
-        return new ApiResponse<LoginResponse>(appService.login(loginCreateRequest), HttpStatus.ACCEPTED);
+        return new ApiResponse<LoginResponse>(appService.login(loginCreateRequest), HttpStatus.OK);
     }
 }

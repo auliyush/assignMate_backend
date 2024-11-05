@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Document(collection = "submissions")
@@ -20,6 +21,6 @@ public class Submission {
     private String submissionTitle;
     private String submissionDescription;
     private String file;
-    private String submissionDate;
+    private LocalDate submissionDate;
     private String submissionStatus;
 }

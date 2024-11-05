@@ -20,9 +20,10 @@ public class User {
     private String userRole;
     private List<Submission> submissionList;
     private List<Assignment> assignmentList;
-
+    private List<Notification> notifications;
     public User(){
             this.assignmentList = new ArrayList<>();
             this.submissionList = new ArrayList<>();
+            this.notifications = new ArrayList<>();
     }
 }

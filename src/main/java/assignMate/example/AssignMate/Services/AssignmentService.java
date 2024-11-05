@@ -13,4 +13,6 @@ public interface AssignmentService {
     Assignment getAssignmentById(String assignmentId);
 
     List<Assignment> getAllAssignmentByAdminId(String adminId);
+
+    List<Assignment> getAllAssignments();
 }

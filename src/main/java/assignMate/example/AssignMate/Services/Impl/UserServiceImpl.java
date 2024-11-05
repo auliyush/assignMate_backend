@@ -2,11 +2,14 @@ package assignMate.example.AssignMate.Services.Impl;
 
 import assignMate.example.AssignMate.Exception.ApplicationException;
 import assignMate.example.AssignMate.Models.CreateRequest.UserCreateRequest;
+import assignMate.example.AssignMate.Models.Notification;
 import assignMate.example.AssignMate.Models.User;
 import assignMate.example.AssignMate.Repositories.UserRepository;
 import assignMate.example.AssignMate.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,7 +29,6 @@ public class UserServiceImpl implements UserService {
             user.setPhoneNumber(userCreateRequest.getPhoneNumber());
             user.setPassword(userCreateRequest.getPassword());
             user.setUserRole(userCreateRequest.getRole());
-            System.out.println("create - "+user.getUserRole());
             return userRepository.save(user);
         }
     }
@@ -39,5 +41,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(String userId) {
         return userRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Boolean addNotificationInUser(Notification notification, String adminId) {
+        for (User user : getAllUser()){
+            if(!user.getUserId().equals(adminId)){
+                user.getNotifications().add(notification);
+                userRepository.save(user);
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return userRepository.findAll();
     }
 }
