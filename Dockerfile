@@ -1,5 +1,5 @@
 # Use Maven to build the application
-FROM maven:3.9.9-ibm-semeru-17-focal as build
+FROM maven:3.9.9-ibm-semeru-17-focal AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
