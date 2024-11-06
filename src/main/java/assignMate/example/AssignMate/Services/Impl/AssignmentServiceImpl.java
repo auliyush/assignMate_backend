@@ -66,6 +66,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         assignment.setAssignmentName(assignmentCreateRequest.getAssignmentName());
         assignment.setAssignmentDescription(assignmentCreateRequest.getAssignmentDescription());
         assignment.setAssignmentFile(assignmentCreateRequest.getAssignmentFile());
+        assignment.setAdminName(assignmentCreateRequest.getAdminName());
         assignment.setActive(true);
         assignment.setCreateDate(assignmentCreateRequest.getCreateDate());
         assignment.setDueDate(assignmentCreateRequest.getDueDate());

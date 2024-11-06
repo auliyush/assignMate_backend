@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class AssignmentCreateRequest {
     private String adminId;
+    private String adminName;
     private String assignmentName;
     private String assignmentDescription;
     private String assignmentFile;
