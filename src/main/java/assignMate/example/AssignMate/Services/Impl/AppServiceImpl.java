@@ -29,7 +29,7 @@ public class AppServiceImpl implements AppService {
         }
         User user = userService.getUserByPhoneNumber(loginCreateRequest.getPhoneNumber());
         if(user == null) {
-            throw new ApplicationException("User Not Exist");
+            throw new ApplicationException("Mobile number Not Found");
         }
         if(user.getPassword().equals(loginCreateRequest.getPassword())){
             LoginResponse loginResponse = new LoginResponse();
@@ -37,7 +37,7 @@ public class AppServiceImpl implements AppService {
             loginResponse.setLoggedRole(user.getUserRole());
             return loginResponse;
         }else {
-            throw new ApplicationException("Mobile Number Password Not Match");
+            throw new ApplicationException("Mobile Number or Password not match");
         }
     }
 }
