@@ -51,7 +51,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         assignment.setAssignmentDescription(assignmentCreateRequest.getAssignmentDescription());
         assignment.setAssignmentFile(assignmentCreateRequest.getAssignmentFile());
         assignment.setAdminName(assignmentCreateRequest.getAdminName());
-        assignment.setActiveStatus(true);
+        assignment.setActive(true);
         assignment.setCreateDate(assignmentCreateRequest.getCreateDate());
         assignment.setDueDate(assignmentCreateRequest.getDueDate());
         return assignment;
@@ -69,6 +69,6 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public List<Assignment> getAllAssignments() {
-        return assignmentRepository.findAllByActiveStatus(true);
+        return assignmentRepository.findAllByIsActive(true);
     }
 }

@@ -13,5 +13,5 @@ public interface AssignmentRepository extends MongoRepository<Assignment, String
 
     List<Assignment> findAllByAdminId(String adminId);
 
-    List<Assignment> findAllByActiveStatus(boolean status);
+    List<Assignment> findAllByIsActive(boolean status);
 }

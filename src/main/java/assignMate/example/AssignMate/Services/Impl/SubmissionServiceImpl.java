@@ -35,7 +35,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         Assignment assignment = assignmentService.getAssignmentById(submissionCreateRequest.getAssignmentId());
         // check assignment validation
         if(assignment != null){
-            if(!assignment.isActiveStatus()){
+            if(!assignment.isActive()){
                 throw new ApplicationException("Assignment Due Date is complete");
             }
         }else {
