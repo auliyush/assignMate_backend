@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Document(collection = "notification")
@@ -16,5 +19,7 @@ public class Notification {
     private String notificationId;
     private String notificationTitle;
     private String notificationDescription;
-    private Date notificationDate;
+    private LocalDate notificationDate;
+    private LocalTime notificationTime;
+    private boolean hasSeen;
 }

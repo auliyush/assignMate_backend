@@ -14,7 +14,7 @@ public interface UserService {
 
     User getUserByPhoneNumber(String phoneNumber);
 
-    Boolean addNotificationInUser(Notification notification, String adminId);
-
     List<User> getAllUser();
+
+    User saveUpdates(User user);
 }

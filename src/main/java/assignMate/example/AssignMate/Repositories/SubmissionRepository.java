@@ -14,4 +14,6 @@ public interface SubmissionRepository extends MongoRepository<Submission, String
     Submission findByUserId(String userId);
 
     Submission findBySubmissionId(String submissionId);
+
+    Submission findByUserIdAndAssignmentId(String userId, String assignmentId);
 }

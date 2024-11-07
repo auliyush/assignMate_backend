@@ -3,6 +3,7 @@ package assignMate.example.AssignMate.Services;
 import assignMate.example.AssignMate.Models.CreateRequest.SubmissionCreateRequest;
 import assignMate.example.AssignMate.Models.Submission;
 import assignMate.example.AssignMate.Models.UpdateRequest.UpdateSubmissionRequest;
+import assignMate.example.AssignMate.Models.UpdateRequest.UpdateSubmissionStatusRequest;
 
 import java.util.List;
 
@@ -16,7 +17,9 @@ public interface SubmissionService {
 
     Submission getSubmissionById(String submissionId);
 
+    Submission getSubmissionByUserIdAndAssignmentId(String userId, String assignmentId);
+
     Boolean updateSubmission(UpdateSubmissionRequest updateSubmissionRequest);
 
-    Boolean updateSubmissionStatus(String adminId, String submissionId);
+    Boolean updateSubmissionStatus(UpdateSubmissionStatusRequest statusRequest);
 }

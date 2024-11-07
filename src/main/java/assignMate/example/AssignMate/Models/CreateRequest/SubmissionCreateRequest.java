@@ -12,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class SubmissionCreateRequest {
     private String userId;
+    private String userName;
     private String assignmentId;
     private String submissionTitle;
     private String submissionDescription;

@@ -17,6 +17,7 @@ public class Submission {
     @Id
     private String submissionId;
     private String userId;
+    private String userName;
     private String assignmentId;
     private String submissionTitle;
     private String submissionDescription;

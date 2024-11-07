@@ -2,7 +2,6 @@ package assignMate.example.AssignMate.Services.Impl;
 
 import assignMate.example.AssignMate.Exception.ApplicationException;
 import assignMate.example.AssignMate.Models.CreateRequest.UserCreateRequest;
-import assignMate.example.AssignMate.Models.Notification;
 import assignMate.example.AssignMate.Models.User;
 import assignMate.example.AssignMate.Repositories.UserRepository;
 import assignMate.example.AssignMate.Services.UserService;
@@ -44,18 +43,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean addNotificationInUser(Notification notification, String adminId) {
-        for (User user : getAllUser()){
-            if(!user.getUserId().equals(adminId)){
-                user.getNotifications().add(notification);
-                userRepository.save(user);
-            }
-        }
-        return true;
+    public List<User> getAllUser() {
+        return userRepository.findAll();
     }
 
     @Override
-    public List<User> getAllUser() {
-        return userRepository.findAll();
+    public User saveUpdates(User user) {
+        return userRepository.save(user);
     }
 }

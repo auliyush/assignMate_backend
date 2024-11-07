@@ -4,6 +4,7 @@ import assignMate.example.AssignMate.Base.ApiResponse;
 import assignMate.example.AssignMate.Models.CreateRequest.SubmissionCreateRequest;
 import assignMate.example.AssignMate.Models.Submission;
 import assignMate.example.AssignMate.Models.UpdateRequest.UpdateSubmissionRequest;
+import assignMate.example.AssignMate.Models.UpdateRequest.UpdateSubmissionStatusRequest;
 import assignMate.example.AssignMate.Services.SubmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class SubmissionController {
         return new ApiResponse<>(submissionService.updateSubmission(updateSubmissionRequest), HttpStatus.OK);
     }
     @PutMapping("/update/submission/status")
-    public ApiResponse<Boolean> updateSubmissionStatus(@RequestParam String adminId, String submissionId){
-        return new ApiResponse<>(submissionService.updateSubmissionStatus(adminId,submissionId), HttpStatus.OK);
+    public ApiResponse<Boolean> updateSubmissionStatus(@RequestBody UpdateSubmissionStatusRequest statusRequest){
+        return new ApiResponse<>(submissionService.updateSubmissionStatus(statusRequest), HttpStatus.OK);
     }
 }

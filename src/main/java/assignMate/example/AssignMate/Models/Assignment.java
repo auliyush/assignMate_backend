@@ -19,7 +19,7 @@ public class Assignment {
     private String assignmentName;
     private String assignmentDescription;
     private String assignmentFile;
-    private boolean isActive;
+    private boolean activeStatus;
     private LocalDate createDate;
     private LocalDate dueDate;
     private List<Submission> submissionList;

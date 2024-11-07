@@ -5,15 +5,18 @@ import assignMate.example.AssignMate.Models.Assignment;
 import assignMate.example.AssignMate.Models.CreateRequest.SubmissionCreateRequest;
 import assignMate.example.AssignMate.Models.Submission;
 import assignMate.example.AssignMate.Models.UpdateRequest.UpdateSubmissionRequest;
+import assignMate.example.AssignMate.Models.UpdateRequest.UpdateSubmissionStatusRequest;
 import assignMate.example.AssignMate.Models.User;
 import assignMate.example.AssignMate.Repositories.SubmissionRepository;
 import assignMate.example.AssignMate.Services.AssignmentService;
+import assignMate.example.AssignMate.Services.NotificationService;
 import assignMate.example.AssignMate.Services.SubmissionService;
 import assignMate.example.AssignMate.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class SubmissionServiceImpl implements SubmissionService {
@@ -24,13 +27,15 @@ public class SubmissionServiceImpl implements SubmissionService {
     private UserService userService;
     @Autowired
     private SubmissionRepository submissionRepository;
+    @Autowired
+    private NotificationService notificationService;
 
     @Override
     public Boolean createSubmission(SubmissionCreateRequest submissionCreateRequest) {
         Assignment assignment = assignmentService.getAssignmentById(submissionCreateRequest.getAssignmentId());
         // check assignment validation
         if(assignment != null){
-            if(!assignment.isActive()){
+            if(!assignment.isActiveStatus()){
                 throw new ApplicationException("Assignment Due Date is complete");
             }
         }else {
@@ -40,14 +45,26 @@ public class SubmissionServiceImpl implements SubmissionService {
         if(user == null){
             throw new ApplicationException("User not Exist");
         }
+        if(getSubmissionByUserIdAndAssignmentId(submissionCreateRequest.getUserId(),
+                submissionCreateRequest.getAssignmentId()) != null){
+            throw new ApplicationException("You Already Submitted");
+        }
         Submission submission = getSubmission(submissionCreateRequest);
         submissionRepository.save(submission);
+        CompletableFuture.runAsync(() -> {
+            try{
+                notificationService.submissionCreateNotification(submission,assignment.getAdminId());
+            }catch (Exception e){
+                System.out.println(e);
+            }
+        });
         return true;
     }
     // this method for set submission data from createRequest (improve code readability)
     private static Submission getSubmission(SubmissionCreateRequest submissionCreateRequest) {
         Submission submission = new Submission();
         submission.setUserId(submissionCreateRequest.getUserId());
+        submission.setUserName(submissionCreateRequest.getUserName());
         submission.setAssignmentId(submissionCreateRequest.getAssignmentId());
         submission.setSubmissionTitle(submissionCreateRequest.getSubmissionTitle());
         submission.setSubmissionDescription(submissionCreateRequest.getSubmissionDescription());
@@ -79,6 +96,11 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
+    public Submission getSubmissionByUserIdAndAssignmentId(String userId, String assignmentId) {
+        return submissionRepository.findByUserIdAndAssignmentId(userId, assignmentId);
+    }
+
+    @Override
     public Boolean updateSubmission(UpdateSubmissionRequest updateSubmissionRequest) {
         Submission submission = getSubmissionById(updateSubmissionRequest.getSubmissionId());
         if(submission == null){
@@ -99,8 +121,8 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Boolean updateSubmissionStatus(String adminId, String submissionId) {
-        User user = userService.getUserById(adminId);
+    public Boolean updateSubmissionStatus(UpdateSubmissionStatusRequest statusRequest) {
+        User user = userService.getUserById(statusRequest.getAdminId());
         if(user != null){
             if(!user.getUserRole().equalsIgnoreCase("admin")){
                 throw new ApplicationException("You are Not an admin you can't update");
@@ -108,13 +130,20 @@ public class SubmissionServiceImpl implements SubmissionService {
         }else {
             throw new ApplicationException("User Not Exists");
         }
-        Submission submission = getSubmissionById(submissionId);
+        Submission submission = getSubmissionById(statusRequest.getSubmissionId());
         if(submission == null){
             throw new ApplicationException("Submission Not Exists");
         }
         Assignment assignment = assignmentService.getAssignmentById(submission.getAssignmentId());
-        if(assignment.getAdminId().equals(adminId)){
-           submission.setSubmissionStatus("Reviewed");
+        if(assignment.getAdminId().equals(statusRequest.getAdminId())){
+           submission.setSubmissionStatus(statusRequest.getStatus());
+           CompletableFuture.runAsync(() -> {
+               try {
+                   notificationService.submissionStatusUpdateNotification(submission);
+               }catch (Exception e){
+                   System.out.println(e);
+               }
+           });
            submissionRepository.save(submission);
            return true;
         }else {
