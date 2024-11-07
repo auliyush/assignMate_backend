@@ -22,19 +22,12 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Notification assignmentCreateNotification(Assignment assignment) {
         Notification notification = new Notification();
-        notification.setNotificationTitle(assignment.getAssignmentName());
+        notification.setNotificationTitle("You have received new assignment");
         notification.setNotificationDescription("Assignment's submissions starts from Now," +
                 " due date Of submissions "+ assignment.getDueDate()+"\n"+"Hurry! Complete Assignment\n By - "+assignment.getAdminName());
         notification.setNotificationDate(LocalDate.now());
         notification.setNotificationTime(LocalTime.now());
         notification.setHasSeen(false);
-        notificationRepository.save(notification);
-        for (User user : userService.getAllUser()){
-            if(!user.getUserId().equals(assignment.getAdminId())){
-                user.getNotifications().add(notification);
-                userService.saveUpdates(user);
-            }
-        }
         return notificationRepository.save(notification);
     }
 

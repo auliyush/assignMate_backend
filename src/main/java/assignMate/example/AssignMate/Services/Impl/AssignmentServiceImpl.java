@@ -3,6 +3,7 @@ package assignMate.example.AssignMate.Services.Impl;
 import assignMate.example.AssignMate.Exception.ApplicationException;
 import assignMate.example.AssignMate.Models.Assignment;
 import assignMate.example.AssignMate.Models.CreateRequest.AssignmentCreateRequest;
+import assignMate.example.AssignMate.Models.Notification;
 import assignMate.example.AssignMate.Models.User;
 import assignMate.example.AssignMate.Repositories.AssignmentRepository;
 import assignMate.example.AssignMate.Services.AssignmentService;
@@ -34,7 +35,15 @@ public class AssignmentServiceImpl implements AssignmentService {
             assignmentRepository.save(assignment);
             CompletableFuture.runAsync(() -> {
                 try {
-                   notificationService.assignmentCreateNotification(assignment);
+                    for (String usersId : assignmentCreateRequest.getStudentsId()){
+                        User user1 = userService.getUserById(usersId);
+                        if(user1 != null){
+                            user1.getAssignmentList().addFirst(assignment);
+                            Notification notification = notificationService.assignmentCreateNotification(assignment);
+                            user1.getNotifications().addFirst(notification);
+                            userService.saveUpdates(user1);
+                        }
+                    }
                 }catch (Exception e){
                     System.out.println(e);
                 }

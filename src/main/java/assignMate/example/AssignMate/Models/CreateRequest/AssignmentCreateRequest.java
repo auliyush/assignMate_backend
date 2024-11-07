@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,4 +18,5 @@ public class AssignmentCreateRequest {
     private String assignmentFile;
     private LocalDate createDate;
     private LocalDate dueDate;
+    private List<String> studentsId;
 }

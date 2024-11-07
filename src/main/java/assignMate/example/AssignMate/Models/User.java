@@ -19,6 +19,7 @@ public class User {
     private String password;
     private String userRole;
     private List<Notification> notifications;
+    private List<Assignment> assignmentList;
     public User(){
             this.notifications = new ArrayList<>();
     }
