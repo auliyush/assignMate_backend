@@ -38,9 +38,9 @@ public class AssignmentServiceImpl implements AssignmentService {
                     for (String usersId : assignmentCreateRequest.getStudentsId()){
                         User user1 = userService.getUserById(usersId);
                         if(user1 != null){
-                            user1.getAssignmentList().addFirst(assignment);
+                            user1.getAssignmentList().add(assignment);
                             Notification notification = notificationService.assignmentCreateNotification(assignment);
-                            user1.getNotifications().addFirst(notification);
+                            user1.getNotifications().add(notification);
                             userService.saveUpdates(user1);
                         }
                     }
