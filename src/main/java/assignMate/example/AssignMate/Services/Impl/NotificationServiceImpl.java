@@ -1,4 +1,5 @@
 package assignMate.example.AssignMate.Services.Impl;
+import assignMate.example.AssignMate.Exception.ApplicationException;
 import assignMate.example.AssignMate.Models.Assignment;
 import assignMate.example.AssignMate.Models.Notification;
 import assignMate.example.AssignMate.Models.Submission;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -35,7 +37,7 @@ public class NotificationServiceImpl implements NotificationService {
     public Notification submissionCreateNotification(Submission submission, String adminId) {
         Notification notification =  new Notification();
         notification.setNotificationTitle("New Submission submitted");
-        notification.setNotificationDescription(submission.getUserName() + "Submitted assignment's submission");
+        notification.setNotificationDescription(submission.getUserName()+" Submitted assignment's submission");
         notification.setNotificationDate(LocalDate.now());
         notification.setNotificationTime(LocalTime.now());
         notification.setHasSeen(false);
@@ -66,5 +68,48 @@ public class NotificationServiceImpl implements NotificationService {
             }
         }
         return notification;
+    }
+
+    @Override
+    public Boolean deleteNotification(String userId, String notificationId) {
+        Notification notification = getNotificationBYId(notificationId);
+        if(notification == null){
+            throw new ApplicationException("Invalid Notification");
+        }
+        for(User user : userService.getAllUser()){
+            if(user.getUserId().equals(userId)){
+                List<Notification> notificationList = user.getNotifications();
+                notificationList.remove(notification);
+                user.setNotifications(notificationList);
+                userService.saveUpdates(user);
+                return true;
+            }
+        }
+        throw new ApplicationException("User Id not Exists");
+    }
+
+    @Override
+    public Notification getNotificationBYId(String notificationId) {
+        return notificationRepository.findByNotificationId(notificationId);
+    }
+
+    @Override
+    public Boolean updateSeenStatus(String notificationId, String userId) {
+        Notification notification = getNotificationBYId(notificationId);
+        if(notification == null){
+            throw new ApplicationException("Notification not available");
+        }
+        User user = userService.getUserById(userId);
+        if(user == null){
+            throw new ApplicationException("User not available");
+        }
+        for(Notification notification1 : user.getNotifications()){
+            if(notification1.getNotificationId().equals(notificationId)){
+                notification1.setHasSeen(true);
+                userService.saveUpdates(user);
+                return true;
+            }
+        }
+        return false;
     }
 }

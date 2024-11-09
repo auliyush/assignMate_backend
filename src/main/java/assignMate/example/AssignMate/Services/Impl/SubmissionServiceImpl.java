@@ -51,13 +51,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         }
         Submission submission = getSubmission(submissionCreateRequest);
         submissionRepository.save(submission);
-        CompletableFuture.runAsync(() -> {
-            try{
                 notificationService.submissionCreateNotification(submission,assignment.getAdminId());
-            }catch (Exception e){
-                System.out.println(e);
-            }
-        });
         return true;
     }
     // this method for set submission data from createRequest (improve code readability)
@@ -137,13 +131,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         Assignment assignment = assignmentService.getAssignmentById(submission.getAssignmentId());
         if(assignment.getAdminId().equals(statusRequest.getAdminId())){
            submission.setSubmissionStatus(statusRequest.getStatus());
-           CompletableFuture.runAsync(() -> {
-               try {
                    notificationService.submissionStatusUpdateNotification(submission);
-               }catch (Exception e){
-                   System.out.println(e);
-               }
-           });
            submissionRepository.save(submission);
            return true;
         }else {

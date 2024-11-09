@@ -2,6 +2,7 @@ package assignMate.example.AssignMate.Services;
 
 import assignMate.example.AssignMate.Models.Assignment;
 import assignMate.example.AssignMate.Models.CreateRequest.AssignmentCreateRequest;
+import assignMate.example.AssignMate.Models.UpdateRequest.UpdateAssignmentRequest;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface AssignmentService {
     List<Assignment> getAllAssignmentByAdminId(String adminId);
 
     List<Assignment> getAllAssignments();
+
+    Boolean updateAssignment(UpdateAssignmentRequest updateAssignmentRequest);
 }

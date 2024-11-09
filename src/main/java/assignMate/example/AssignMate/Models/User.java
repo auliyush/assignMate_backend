@@ -21,6 +21,7 @@ public class User {
     private List<Notification> notifications;
     private List<Assignment> assignmentList;
     public User(){
+            this.assignmentList = new ArrayList<>();
             this.notifications = new ArrayList<>();
     }
 }

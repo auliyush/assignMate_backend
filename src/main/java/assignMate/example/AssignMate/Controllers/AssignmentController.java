@@ -3,6 +3,7 @@ package assignMate.example.AssignMate.Controllers;
 import assignMate.example.AssignMate.Base.ApiResponse;
 import assignMate.example.AssignMate.Models.Assignment;
 import assignMate.example.AssignMate.Models.CreateRequest.AssignmentCreateRequest;
+import assignMate.example.AssignMate.Models.UpdateRequest.UpdateAssignmentRequest;
 import assignMate.example.AssignMate.Services.AssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,10 @@ public class AssignmentController {
     @PostMapping("/create")
     public ApiResponse<Assignment> createAssignment(@RequestBody AssignmentCreateRequest assignmentCreateRequest) {
         return new ApiResponse<>(assignmentService.createAssignment(assignmentCreateRequest), HttpStatus.ACCEPTED);
+    }
+    @PutMapping("/update")
+    public ApiResponse<Boolean> updateAssignment(@RequestBody UpdateAssignmentRequest updateAssignmentRequest){
+        return new ApiResponse<>(assignmentService.updateAssignment(updateAssignmentRequest),HttpStatus.OK);
     }
     @GetMapping("/get/by/Id")
     public ApiResponse<Assignment> getAssignmentById(@RequestParam String assignmentId) {

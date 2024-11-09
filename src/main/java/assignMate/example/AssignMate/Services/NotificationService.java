@@ -11,4 +11,10 @@ public interface NotificationService {
     Notification submissionCreateNotification(Submission submission, String adminId);
 
     Notification submissionStatusUpdateNotification(Submission submission);
+
+    Boolean deleteNotification(String userId, String notificationId);
+
+    Notification getNotificationBYId(String notificationId);
+
+    Boolean updateSeenStatus(String notificationId, String userId);
 }

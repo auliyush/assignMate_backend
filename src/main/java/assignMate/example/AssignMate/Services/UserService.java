@@ -17,4 +17,6 @@ public interface UserService {
     List<User> getAllUser();
 
     User saveUpdates(User user);
+
+    List<User> getAllStudentUser(String role);
 }

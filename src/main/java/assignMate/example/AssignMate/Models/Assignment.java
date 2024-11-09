@@ -22,8 +22,8 @@ public class Assignment {
     private boolean isActive;
     private LocalDate createDate;
     private LocalDate dueDate;
-    private List<Submission> submissionList;
+    private List<String> assignedStudentsIdList;
     public Assignment(){
-        this.submissionList = new ArrayList<>();
+        this.assignedStudentsIdList = new ArrayList<>();
     }
 }
