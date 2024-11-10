@@ -13,7 +13,7 @@ public interface SubmissionService {
 
     List<Submission> getAllSubmissionByAssignmentId(String assignmentId);
 
-    Submission getSubmissionByUserId(String userId);
+    List<Submission> getAllSubmissionByUserId(String userId);
 
     Submission getSubmissionById(String submissionId);
 

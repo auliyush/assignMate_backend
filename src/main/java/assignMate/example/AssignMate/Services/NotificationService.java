@@ -4,6 +4,8 @@ import assignMate.example.AssignMate.Models.Assignment;
 import assignMate.example.AssignMate.Models.Notification;
 import assignMate.example.AssignMate.Models.Submission;
 
+import java.util.List;
+
 public interface NotificationService {
 
     Notification assignmentCreateNotification(Assignment assignment);
@@ -17,4 +19,5 @@ public interface NotificationService {
     Notification getNotificationBYId(String notificationId);
 
     Boolean updateSeenStatus(String notificationId, String userId);
+
 }

@@ -77,11 +77,11 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     @Override
-    public Submission getSubmissionByUserId(String userId) {
+    public List<Submission> getAllSubmissionByUserId(String userId) {
         if(userService.getUserById(userId) == null){
             throw new ApplicationException("User Not Exist");
         }
-        return submissionRepository.findByUserId(userId);
+        return submissionRepository.findAllByUserId(userId);
     }
 
     @Override
@@ -109,7 +109,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         submission.setSubmissionTitle(updateSubmissionRequest.getSubmissionTitle());
         submission.setSubmissionDescription(updateSubmissionRequest.getSubmissionDescription());
         submission.setFile(updateSubmissionRequest.getFile());
-        submission.setSubmissionDate(updateSubmissionRequest.getSubmissionDate());
         submissionRepository.save(submission);
         return true;
     }

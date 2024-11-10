@@ -15,5 +15,4 @@ public class UpdateSubmissionRequest {
     private String submissionTitle;
     private String submissionDescription;
     private String file;
-    private LocalDate submissionDate;
 }

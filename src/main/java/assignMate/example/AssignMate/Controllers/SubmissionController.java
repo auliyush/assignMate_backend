@@ -24,13 +24,17 @@ public class SubmissionController {
     public ApiResponse<Boolean> createSubmission(@RequestBody SubmissionCreateRequest submissionCreateRequest){
         return new ApiResponse<>(submissionService.createSubmission(submissionCreateRequest), HttpStatus.OK);
     }
+    @GetMapping("/get/by/user/assignment/Id")
+    public ApiResponse<Submission> getSubmissionByUserAndAssignmentId(@RequestParam String userId, String assignmentId){
+        return new ApiResponse<>(submissionService.getSubmissionByUserIdAndAssignmentId(userId,assignmentId), HttpStatus.OK);
+    }
     @GetMapping("/get/all/by/assignmentId")
     public ApiResponse<List<Submission>> getAllSubmissionByAssignmentId(@RequestParam String assignmentId){
         return new ApiResponse<>(submissionService.getAllSubmissionByAssignmentId(assignmentId),HttpStatus.OK);
     }
-    @GetMapping("/get/by/userId")
-    public ApiResponse<Submission> getSubmissionByUserId(@RequestParam String userId){
-        return new ApiResponse<>(submissionService.getSubmissionByUserId(userId), HttpStatus.OK);
+    @GetMapping("/get/all/by/userId")
+    public ApiResponse<List<Submission>> getAllSubmissionByUserId(@RequestParam String userId){
+        return new ApiResponse<>(submissionService.getAllSubmissionByUserId(userId), HttpStatus.OK);
     }
     @PutMapping("/update")
     public ApiResponse<Boolean> submissionUpdate(@RequestBody UpdateSubmissionRequest updateSubmissionRequest){
