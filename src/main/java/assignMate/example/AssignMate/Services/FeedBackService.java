@@ -9,5 +9,5 @@ public interface FeedBackService {
 
     Boolean createFeedBack(FeedBackCreateRequest feedBackCreateRequest);
 
-    List<FeedBack> getAllFeedbackBySubmissionId(String submissionId);
+    FeedBack getFeedbackBySubmissionId(String submissionId);
 }

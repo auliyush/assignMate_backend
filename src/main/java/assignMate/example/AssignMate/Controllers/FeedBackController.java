@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/assignMate/feedback")
 public class FeedBackController {
@@ -22,7 +20,7 @@ public class FeedBackController {
         return new ApiResponse<>(feedBackService.createFeedBack(feedBackCreateRequest), HttpStatus.OK);
     }
     @GetMapping("/get/by/submissionId")
-    public ApiResponse<List<FeedBack>> getAllFeedbackBySubmissionId(@RequestParam String submissionId){
-        return new ApiResponse<>(feedBackService.getAllFeedbackBySubmissionId(submissionId), HttpStatus.OK);
+    public ApiResponse<FeedBack> getFeedbackBySubmissionId(@RequestParam String submissionId){
+        return new ApiResponse<>(feedBackService.getFeedbackBySubmissionId(submissionId), HttpStatus.OK);
     }
 }

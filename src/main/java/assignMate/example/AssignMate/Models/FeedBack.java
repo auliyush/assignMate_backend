@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Document(collection = "feedBack")
@@ -18,5 +19,5 @@ public class FeedBack {
     private String adminId;
     private String submissionId;
     private String feedBack;
-    private Date feedBackDate;
+    private LocalDateTime feedBackDate;
 }

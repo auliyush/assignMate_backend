@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -13,5 +14,5 @@ public class FeedBackCreateRequest {
     private String adminId;
     private String submissionId;
     private String feedBack;
-    private Date feedBackDate;
+    private LocalDateTime feedBackDate;
 }

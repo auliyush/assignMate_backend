@@ -14,6 +14,7 @@ import assignMate.example.AssignMate.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -47,16 +48,21 @@ public class FeedBackServiceImpl implements FeedBackService {
         if(!assignment.getAdminId().equals(feedBackCreateRequest.getAdminId())){
             throw new ApplicationException("You can't give feedback of this submission");
         }
+
+        if(getFeedbackBySubmissionId(feedBackCreateRequest.getSubmissionId()) != null){
+            throw new ApplicationException("Feedback already submitted");
+        }
         FeedBack feedBack = new FeedBack();
         feedBack.setFeedBack(feedBackCreateRequest.getFeedBack());
-        feedBack.setFeedBackDate(feedBackCreateRequest.getFeedBackDate());
+        feedBack.setSubmissionId(feedBackCreateRequest.getSubmissionId());
+        feedBack.setFeedBackDate(LocalDateTime.now());
         feedBackRepository.save(feedBack);
         return true;
-        // todo also here to change string into Date;
     }
 
     @Override
-    public List<FeedBack> getAllFeedbackBySubmissionId(String submissionId) {
-        return feedBackRepository.findAllBySubmissionId(submissionId);
+    public FeedBack getFeedbackBySubmissionId(String submissionId) {
+
+        return feedBackRepository.findBySubmissionId(submissionId);
     }
 }

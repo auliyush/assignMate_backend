@@ -76,13 +76,16 @@ public class NotificationServiceImpl implements NotificationService {
         if(notification == null){
             throw new ApplicationException("Invalid Notification");
         }
-        for(User user : userService.getAllUser()){
-            if(user.getUserId().equals(userId)){
-                List<Notification> notificationList = user.getNotifications();
-                notificationList.remove(notification);
-                user.setNotifications(notificationList);
-                userService.saveUpdates(user);
-                return true;
+        for (User user : userService.getAllUser()) {
+            if (user.getUserId().equals(userId)) {
+                for (Notification notification1 : user.getNotifications()) {
+                    if (notification1.getNotificationId().equals(notification.getNotificationId())) {
+                        user.getNotifications().remove(notification1);
+                        userService.saveUpdates(user);
+                        return true;
+                    }
+                }
+                return false;
             }
         }
         throw new ApplicationException("User Id not Exists");

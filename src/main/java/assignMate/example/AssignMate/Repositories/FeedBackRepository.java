@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface FeedBackRepository extends MongoRepository<FeedBack, String> {
 
-    List<FeedBack> findAllBySubmissionId(String submissionId);
+    FeedBack findBySubmissionId(String submissionId);
 }
